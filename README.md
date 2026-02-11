@@ -1,9 +1,9 @@
 <!-- Badges -->
-[![Build & Deploy Docs](https://github.com/vrui-vr/docs/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/vrui-vr/docs/actions/workflows/build-and-deploy.yml)
-[![Documentation](https://img.shields.io/badge/docs-mkdocs-blue)](https://vrui-vr.github.io/docs/)
+[![Build & Deploy Docs](https://github.com/vrui-vr/vrui-vr.github.io/actions/workflows/build-and-deploy.yml/badge.svg)](https://github.com/vrui-vr/vrui-vr.github.io/actions/workflows/build-and-deploy.yml)
+[![Documentation](https://img.shields.io/badge/docs-mkdocs-blue)](https://vrui-vr.github.io/vrui-vr.github.io/)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL_v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 
-# docs
+# vrui-vr.github.io
 
 A central repository that hosts the configuration and build settings for documentation across all repos in the VRUI organization.
 
@@ -15,7 +15,7 @@ Documentation for each repo is hosted in the `docs/` directory of that repo. Thi
 
 ### Updating the docs site
 
-When the `docs/` directory is updated in any repo (e.g. `vrui-vr/arsandbox`), the `docs-update.yml` GitHub Action is triggered, which tells the `docs` repo (this one) to pull in the latest changes and rebuild the documentation site.
+When the `docs/` directory is updated in any repo (e.g. `vrui-vr/arsandbox`), the `docs-update.yml` GitHub Action is triggered, which tells the `vrui-vr.github.io` repo (this one) to pull in the latest changes and rebuild the documentation site.
 
 The most up-to-date version of `docs-update.yml` is located in this repository under `templates/workflows/docs-update.yml`.
 
@@ -58,14 +58,14 @@ A new build and deploy job is triggered, and appears to be "manually" run by the
 2. Copy `templates/workflows/docs-update.yml` to `.github/workflows/docs-update.yml` in the repo that you are creating docs in. See [`vrui-vr/arsandbox/docs/nav.yml`](https://github.com/vrui-vr/arsandbox/blob/main/docs/nav.yml) for an example of how to structure the `nav.yml` file. Recommended: check out `mkdocs.generated.yml` in *this* repository to see how the `nav.yml` files are merged.
 3. Create the `nav.yml` file in the `docs/` directory of the new repo, following the format of existing `nav.yml` files. (Do not rename it to something else, as the script expects it to be named `nav.yml`.)
 4. Add the new repo to the `repos` list in `repos.text` in *this* repository.
-5. Create a change in the main branch of the repo that you are adding docs for, which will trigger the `docs-update.yml` workflow and update the docs site.
-6. Check out the changes at https://vrui-vr.github.io/docs/ after a the build-and-deploy job has completed (a few minutes).
+5. Create a change in the main branch of the repo that you are adding docs for, which will trigger the `docs-update.yml` workflow and update the docs (vrui-vr.github.io) site.
+6. Check out the changes at https://vrui-vr.github.io/docs/ after the build-and-deploy job has completed (a few minutes).
 
 ## Testing changes locally
 
 You can (AND SHOULD) test any changes to the documentation site locally by following these steps:
 
-1. Clone this repository (and the repository you are creating docs for) to your local machine.
+1. Clone this repository (vrui-vr.github.io) (and the repository you are creating docs for) to your local machine.
 2. Ensure that they are located in the same parent directory, e.g.:
 
    ```sh
@@ -85,12 +85,18 @@ You can (AND SHOULD) test any changes to the documentation site locally by follo
 Example output:
 ```
 ❯ ./scripts/local_build_and_serve.sh
+Cleaning up symlinks...
 Preparing symlink for vrui...
-✅ Linked /Users/<USER>/repos/datalab/vrui/docs → /Users/<USER>/repos/datalab/docs/docs/vrui
+✅ Linked ~/repos/datalab/vrui/docs → ~/repos/datalab/docs/docs/vrui
 Preparing symlink for kinect...
-✅ Linked /Users/<USER>/repos/datalab/kinect/docs → /Users/<USER>/repos/datalab/docs/docs/kinect
+✅ Linked ~/repos/datalab/kinect/docs → ~/repos/datalab/docs/docs/kinect
 Preparing symlink for arsandbox...
-✅ Linked /Users/<USER>/repos/datalab/arsandbox/docs → /Users/<USER>/repos/datalab/docs/docs/arsandbox
+✅ Linked ~/repos/datalab/arsandbox/docs → ~/repos/datalab/docs/docs/arsandbox
+Preparing symlink for .github-vrui-vr...
+✅ Linked ~/repos/datalab/.github-vrui-vr/CODE_OF_CONDUCT.md → ~/repos/datalab/docs/docs/CODE_OF_CONDUCT.md
+✅ Linked ~/repos/datalab/.github-vrui-vr/CONTRIBUTING.md → ~/repos/datalab/docs/docs/CONTRIBUTING.md
+✅ Linked ~/repos/datalab/.github-vrui-vr/assets/GitHub_Header_Discussions.png → ~/repos/datalab/docs/docs/assets/GitHub_Header_Discussions.png
+✅ Linked ~/repos/datalab/.github-vrui-vr/assets/GitHub_Header_Issues.png → ~/repos/datalab/docs/docs/assets/GitHub_Header_Issues.png
 Generating mkdocs.yml...
 Grabbing nav from docs/vrui/nav.yml
 Grabbing nav from docs/kinect/nav.yml
@@ -98,18 +104,8 @@ Grabbing nav from docs/arsandbox/nav.yml
 Starting local MkDocs server...
 INFO    -  Building documentation...
 INFO    -  Cleaning site directory
-WARNING -  The following pages exist in the docs directory, but are not included in the "nav" configuration:
-             - kinect/index.md
-             - kinect/installation/intrinsically_calibrating_a_single_kinect.md
-             - kinect/installation/per_pixel_depth_correction.md
-             - kinect/installation/projection_matrix_calc.md
-             - vrui/index.md
-WARNING -  Doc file 'kinect/installation/guide.md' contains a link 'download_zip.png', but the target 'kinect/installation/download_zip.png' is not found among
-           documentation files.
-INFO    -  Documentation built in 0.32 seconds
-INFO    -  [14:42:06] Watching paths for changes: 'docs', 'mkdocs.generated.yml', 'overrides', '/Users/<USER>/repos/datalab/vrui/docs',
-           '/Users/<USER>/repos/datalab/kinect/docs', '/Users/<USER>/repos/datalab/arsandbox/docs'
-INFO    -  [14:42:06] Serving on http://127.0.0.1:8000/docs/
+INFO    -  Documentation built in 0.33 seconds
+INFO    -  [11:29:03] Serving on http://127.0.0.1:8000/
 ^CINFO    -  Shutting down...
 Cleaning up symlinks...
 ✅ Done.
