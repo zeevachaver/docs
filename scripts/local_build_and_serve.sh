@@ -18,7 +18,8 @@ if [[ -a "$GH_REPO" ]]; then
   REPO_NAMES+=("$(basename "$GH_REPO")")
 fi
 
-echo "Cleaning up symlinks just in case..."
+# Clean up symlinks before server starts
+echo "Cleaning up symlinks..."
 find $DOCS_REPO_ROOT -type l -delete
 
 # Build full paths (e.g., ../arsandbox)
