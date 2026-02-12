@@ -5,13 +5,13 @@
 
 # vrui-vr.github.io
 
-A central repository that hosts the configuration and build settings for documentation across all repos in the VRUI organization.
+A central repository that hosts the configuration and build settings for documentation across all repos in the Vrui organization.
 
 The docs are built using [MkDocs](https://www.mkdocs.org/) with the [Material for MkDocs theme](https://squidfunk.github.io/mkdocs-material/).
 
 ## How it works
 
-Documentation for each repo is hosted in the `docs/` directory of that repo. This repository aggregates and builds the documentation from all repos in the VRUI organization.
+Documentation for each repo is hosted in the `docs/` directory of that repo. This repository aggregates and builds the documentation from all repos in the Vrui organization.
 
 ### Updating the docs site
 
@@ -40,9 +40,9 @@ The base navigation structure is defined in `mkdocs.base.yml`, which includes th
 
 In order to make all the repos play nice with each other, the `docs-update.yml` workflow in each repo references a common `DOCS_DEPLOY_TOKEN` secret, which is a GitHub personal access token with `repo` and `workflow` scopes.
 
-This token is an organization-level secret, so it can be used by any repo in the VRUI organization. That way, no individual repo needs to have its own token, which would be a pain to manage.
+This token is an organization-level secret, so it can be used by any repo in the Vrui organization. That way, no individual repo needs to have its own token, which would be a pain to manage.
 
-Most of the existing repositories in the VRUI organization already have access to this secret. However, if you are creating a new repo and want to add documentation for it, you will need to give that repo access to the `DOCS_DEPLOY_TOKEN` secret by going to VRUI's Settings > Secrets and variables > Actions > Organization secrets, and then clicking "Edit DOCS_DEPLOY_TOKEN" (the pencil icon). Once there, click the gear icon and add the new repository to the list of selected repositories that can access the secret.
+Most of the existing repositories in the Vrui organization already have access to this secret. However, if you are creating a new repo and want to add documentation for it, you will need to give that repo access to the `DOCS_DEPLOY_TOKEN` secret by going to Vrui's Settings > Secrets and variables > Actions > Organization secrets, and then clicking "Edit DOCS_DEPLOY_TOKEN" (the pencil icon). Once there, click the gear icon and add the new repository to the list of selected repositories that can access the secret.
 
 Important!!! The `DOCS_DEPLOY_TOKEN` secret value is based on a personal access token (PAT) that is owned by a specific user (currently me: @nredick). It is set to never expire, but if that user leaves the organization, the token will need to be regenerated and updated in the organization secrets to someone else with permissions to make changes to the repos. In short, the PAT behind the `DOCS_DEPLOY_TOKEN` secret allows the repos to act on the user's behalf to tell `vrui-vr/docs` that it's time to rebuild (which requires a certain level of permissions).
 

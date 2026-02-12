@@ -27,7 +27,7 @@ jobs:
             activate-environment: vrui
             environment-file: environment.yml
             miniforge-version: latest
-            auto-activate-base: false
+            auto-activate: false
 
       - name: Clone and stage external docs
         shell: bash -el {0}
