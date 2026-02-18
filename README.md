@@ -13,7 +13,7 @@ Check out the [Table of Contents](#table-of-contents) for details regarding how
 
 ## Table of Contents
 
-- [docs](#docs)
+- [vrui-vr.github.io](#vrui-vrgithubio)
    - [Table of Contents](#table-of-contents)
    - [How it works](#how-it-works)
       - [Updating the docs site](#updating-the-docs-site)
