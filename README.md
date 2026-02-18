@@ -81,8 +81,8 @@ Below, we'll include some tips of how to setup a VSCode workspace, clone and for
 
 ### Forking and Cloning
 
-?? info "Heads up!"
-   These instructions are adapted from GitHub's site, which contains more comprehensive instructions: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+> [!TIP]
+> These instructions are adapted from GitHub's site, which contains more comprehensive instructions: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
 
 #### Forking
 To make a copy of an application repository (and the `vrui-vr/vrui-vr.github.io` repository), you will create a fork, a new repository that is a copy of the original “upstream” repository (created by Vrui maintainers). Forks can be used to create changes outside of the upstream repository, which are then proposed back to the upstream repository in the form of a pull request. 
@@ -120,16 +120,16 @@ cd <vrui-title>
 git clone https://github.com/<YOUR-USERNAME>/<repository-name>
 ```
 
-?? info "Heads up!"
-   Check out the "Cloning your forked repository" section in the GitHub page referenced earlier: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+> [!TIP]
+> Check out the "Cloning your forked repository" section in the GitHub page referenced earlier: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
 
 
 ### Setting up and Fetching the Upstream
 
 After forking and cloning one of Vrui's repositories, you may need to add an "upstream" repository explicitly. An upstream repository is the original project repository that you forked or cloned from. In this case, you want to set the upstream as the original Vrui repo that you forked, as found on [Vrui's GitHub](https://github.com/vrui-vr). The upstream repository is where Vrui maintainers will add updates to code and documentation. By adding the upstream, you will then be able to safely incorporate Vrui maintainer's latest changes to the repositories into your local fork. 
 
-??? info "Heads up!"
-    Angle brackets `<>` in commands below are placeholders, meaning that you have to replace everything between, and including, the angle brackets with some text that depends on your specific circumstances.
+> [!TIP]
+> Angle brackets `<>` in commands below are placeholders, meaning that you have to replace everything between, and including, the angle brackets with some text that depends on your specific circumstances.
 
 However, some settings automatically add the upstream after cloning. Paste the following command your terminal to check:
 
@@ -160,19 +160,19 @@ git fetch upstream
 git merge upstream/main
 ```
 
-?? info "Heads up!"
-   Check out the "Configuring Git to sync your fork with the upstream repository" section in the GitHub page referenced earlier: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
+> [!TIP]
+> Check out the "Configuring Git to sync your fork with the upstream repository" section in the GitHub page referenced earlier: [Fork a repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo)
 
-???+ tip
-   Check out GitHub's page on repositories to understand the different kinds and terminology: [About repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories).
+> [!TIP]
+> Check out GitHub's page on repositories to understand the different kinds and terminology: [About repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories).
 
 
 ### Optional: Setting up a VSCode workspace
 
 To contribute to Vrui, either in documentation and/or in code, one easy way to work in multiple cloned Vrui repositories in parallel is in a VSCode workspace. A VSCode workspace is a collection of one or more folders that are opened in a VSCode window (instance). Vrui is organized in multiple repositories (found [here](https://github.com/vrui-vr)), including a repository for each supported application, a repository to setup documentation (`vrui-vr/vrui-vr.github.io`), and the toolkit itself (`vrui-vr/vrui`). 
 
-??? note
-   Cloning and Forking repositories are expanded upon in an [earlier section](#forking-and-cloning), and is also covered in Vrui's [Contributing doc](https://vrui-vr.github.io/CODE_OF_CONDUCT/).
+>[!NOTE]
+> Cloning and Forking repositories are expanded upon in an [earlier section](#forking-and-cloning), and is also covered in Vrui's [Contributing doc](https://vrui-vr.github.io/CODE_OF_CONDUCT/).
 
 Before creating a workspace, it's recommended to create a parent directory (folder) in your file system that you will store cloned Vrui repositories in. This will make adding the cloned repositories to a workspace much simpler, as you will only need to navigate to one location in your file system. Creating a parent directory can be done in a VSCode terminal via the command: 
 
@@ -193,8 +193,8 @@ To add the cloned repositories in your parent directory to a workspace, open an 
 To be able to reopen this workspace later on, click "Save Workspace as...", and the workspace will now be stored in your parent directory. 
 
 
-???+ tip
-   If you would like to download VSCode, check out this link: [Download Visual Studio Code](https://code.visualstudio.com/download). For a more comprehensive explanation of workspaces, check out this link: [What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces)
+> [!TIP]
+> If you would like to download VSCode, check out this link: [Download Visual Studio Code](https://code.visualstudio.com/download). For a more comprehensive explanation of workspaces, check out this link: [What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces)
 
 
 ## Workflow
@@ -231,8 +231,8 @@ If no conflicts occur, your repository is now up to date. If there are conflicts
 git push origin main
 ```
 
-??? note
-   To contribute changes to Vrui repos, don't push changes to your main branch and instead follow the steps in the [Contributing doc](https://vrui-vr.github.io/CODE_OF_CONDUCT/) to create branches for individual issues.
+> [!NOTE]
+> To contribute changes to Vrui repos, don't push changes to your main branch and instead follow the steps in the [Contributing doc](https://vrui-vr.github.io/CODE_OF_CONDUCT/) to create branches for individual issues.
 
 
 ### Adding documentation for a new repo
