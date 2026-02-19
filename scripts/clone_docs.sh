@@ -30,7 +30,7 @@ for REPO in "${REPOS[@]}"; do
   rm -rf "$TMP_DIR"
 done
 
-# grab all .md files and assets/ from the .github repo
+# grab all *.md files and assets/ from the .github repo
 REPO=".github"
 
 echo "Fetching .md files and assets/ from $REPO..."
