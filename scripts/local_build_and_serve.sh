@@ -48,9 +48,9 @@ for REPO_PATH in "${REPOS[@]}"; do
     ln -s "$DOCS_SRC" "$DEST_LINK"
     echo "✅ Linked $DOCS_SRC → $DEST_LINK"
   elif [[ "$REPO_NAME" == .github* ]]; then
-    for FILENAME in "CODE_OF_CONDUCT.md" "CONTRIBUTING.md";
-        do
-        SRC_FILE="$REPO_PATH/$FILENAME"
+    for FILEPATH in "$REPO_PATH"/*.md; do
+        SRC_FILE="$FILEPATH"
+        FILENAME=$(basename $FILEPATH)
         DEST_FILE="$DOCS_REPO_ROOT/docs/$FILENAME"
         if [ -f "$SRC_FILE" ]; then
             ln -s "$SRC_FILE" "$DEST_FILE"
