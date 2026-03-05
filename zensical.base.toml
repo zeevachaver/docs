@@ -1,0 +1,92 @@
+[project]
+    docs_dir  = "docs"
+    repo_name = "vrui-vr"
+    repo_url  = "https://github.com/vrui-vr"
+    site_name = "Vrui"
+    site_url  = "https://vrui-vr.github.io/"
+
+    nav = [
+        { "Home" = [
+            "index.md",
+            { "Governance" = "governance.md" },
+            { "Contributing to Vrui" = "contributing.md" },
+            { "Code of Conduct" = "code_of_conduct.md" },
+        ] },
+    ]
+
+    [project.plugins]
+        "gh-admonitions" = {} # convert GitHub style alerts (> note) to standard mkdocs admonitions (!!! note)
+        search           = {}
+
+    # https://facelessuser.github.io/pymdown-extensions
+    [project.markdown_extensions]
+        abbr                    = {}
+        admonition              = {}                                           # https://3os.org/utilities/markdown-cheatsheet/admonition/#supported-types
+        footnotes               = {}
+        "pymdownx.arithmatex"   = { generic = true }
+        "pymdownx.details"      = {}
+        "pymdownx.highlight"    = {}
+        "pymdownx.inlinehilite" = {}
+        "pymdownx.keys"         = {}
+        "pymdownx.superfences"  = {}
+        tables                  = {}
+        toc                     = { title = "On this page", permalink = true }
+
+    [project.theme]
+        custom_dir = "overrides"
+        features = [
+            "announce.dismiss",
+            "content.code.annotate",
+            "content.code.copy",
+            "content.tooltips",
+            "navigation.footer",
+            "navigation.indexes",
+            "navigation.instant.preview",
+            "navigation.path",
+            "navigation.sections",
+            "navigation.tabs",
+            "navigation.tabs.sticky",
+            "navigation.top",
+            "search.highlight",
+            "search.suggest",
+            "search.share",
+            "toc.follow",
+        ]
+        font = false
+        icon = { repo = "fontawesome/brands/github" }
+        name = "material"
+
+        [[project.theme.palette]]
+            media  = "(prefers-color-scheme)"
+            toggle = { icon = "material/brightness-auto", name = "Switch to light mode" }
+
+        [[project.theme.palette]]
+            media  = "(prefers-color-scheme: light)"
+            scheme = "default"
+            toggle = { icon = "material/weather-sunny", name = "Switch to dark mode" }
+
+        [[project.theme.palette]]
+            media  = "(prefers-color-scheme: dark)"
+            scheme = "slate"
+            toggle = { icon = "material/weather-night", name = "Switch to system preference" }
+
+    [[project.extra.social]]
+        icon = "material/gavel"
+        link = "/governance"
+        name = "Governance"
+
+    [[project.extra.social]]
+        icon = "material/handshake"
+        link = "/contributing"
+        name = "Contributing to Vrui"
+
+    [[project.extra.social]]
+        icon = "material/account-heart"
+        link = "/code_of_conduct"
+        name = "Code of Conduct"
+
+        extra_javascript = [
+            "javascripts/config.js",
+            "https://polyfill.io/v3/polyfill.min.js?features=es6",
+            "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
+        ]
