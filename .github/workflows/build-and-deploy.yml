@@ -35,14 +35,14 @@ jobs:
 
       - name: Generate mkdocs.yml
         shell: bash -el {0}
-        run: python scripts/generate_mkdocs.py
+        run: python scripts/generate_zensical.py
 
-      - name: Build MkDocs
+      - name: Build Zensical Docs
         shell: bash -el {0}
-        run: mkdocs build --config-file mkdocs.generated.yml
+        run: zensical build --config-file zensical.generated.toml --clean
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: 'site'
 

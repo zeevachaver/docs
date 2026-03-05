@@ -1,28 +1,56 @@
 #!/bin/bash
 set -euo pipefail
 
-# Resolve absolute path of this script regardless of where it's run from
+# Resolve absolute path of this script
 SCRIPT_PATH="$(realpath "${BASH_SOURCE[0]}")"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 
-# Root of the docs repo (parent of script dir)
+# Root of the docs repo
 DOCS_REPO_ROOT="$(realpath "$SCRIPT_DIR/..")"
 EXTERNAL_DIR="$DOCS_REPO_ROOT/docs"
 
 # Read repo names from file
 REPO_NAMES=($(<"$DOCS_REPO_ROOT/repos.txt"))
 
-# Check to see if there is a .github* repo
+# Check for .github* repo
 GH_REPO=$(find "$DOCS_REPO_ROOT/../.github"* -maxdepth 0 -type d 2>/dev/null)
-if [[ -a "$GH_REPO" ]]; then
+if [[ -d "$GH_REPO" ]]; then
   REPO_NAMES+=("$(basename "$GH_REPO")")
 fi
 
-# Clean up symlinks before server starts
-echo "Cleaning up symlinks..."
-find $DOCS_REPO_ROOT -type l -delete
+# --- CLEANUP FUNCTION ---
+cleanup() {
+  echo "Cleaning up generated links and files..."
 
-# Build full paths (e.g., ../arsandbox)
+  # delete the hard-linked repo directories
+  # only delete directories that match names in our REPO_NAMES list
+  for NAME in "${REPO_NAMES[@]}"; do
+    # skip .github just in case someone mistakingly adds it to repos.txt
+    if [[ "$NAME" == .github* ]]; then continue; fi
+
+    TARGET="$EXTERNAL_DIR/$(basename "$NAME")"
+    if [ -d "$TARGET" ] && [ ! -L "$TARGET" ]; then
+       rm -rf "$TARGET"
+    fi
+  done
+
+  # Clean up specific files linked from .github repo into root docs
+  if [[ -n "${GH_REPO:-}" ]]; then
+     find "$EXTERNAL_DIR" -maxdepth 1 -type f -links +1 -delete
+     # Clean up assets specifically from .github
+     find "$EXTERNAL_DIR/assets" -type f -links +1 -delete 2>/dev/null || true
+  fi
+
+  # remove generated site/ dir
+  if [ -d site ]; then
+    rm -rf site
+  fi
+}
+
+# Initial clean
+cleanup
+
+# Build full paths
 REPOS=()
 for NAME in "${REPO_NAMES[@]}"; do
   REPO_PATH="$(realpath "$DOCS_REPO_ROOT/../$NAME" 2>/dev/null || true)"
@@ -30,64 +58,51 @@ for NAME in "${REPO_NAMES[@]}"; do
     echo "⚠️ Skipping $NAME: local repo not found"
     continue
   fi
-
   REPOS+=("$REPO_PATH")
 done
 
-# Link each repo's docs directory into our unified docs folder
+# --- LINKING ---
 for REPO_PATH in "${REPOS[@]}"; do
-  REPO_PATH="$(realpath "$REPO_PATH")"
   REPO_NAME="$(basename "$REPO_PATH")"
-  DEST_LINK="$EXTERNAL_DIR/$REPO_NAME"
   DOCS_SRC="$REPO_PATH/docs"
 
-  echo "Preparing symlink for $REPO_NAME..."
+  if [ -d "$DOCS_SRC" ] && [[ "$REPO_NAME" != .github* ]]; then
+    DEST_DIR="$EXTERNAL_DIR/$REPO_NAME"
+    echo "🔗 Hard-linking $REPO_NAME docs..."
+    mkdir -p "$DEST_DIR"
+    cp -al "$DOCS_SRC/." "$DEST_DIR/"
+    echo "✅ Created hard-link tree → $DEST_DIR"
 
-  rm -rf "$DEST_LINK"  # Remove any old content or link
-  if [ -d "$DOCS_SRC" ]; then
-    ln -s "$DOCS_SRC" "$DEST_LINK"
-    echo "✅ Linked $DOCS_SRC → $DEST_LINK"
   elif [[ "$REPO_NAME" == .github* ]]; then
-    for FILEPATH in "$REPO_PATH"/*.md; do
-        SRC_FILE="$FILEPATH"
-        FILENAME=$(basename $FILEPATH)
-        DEST_FILE="$DOCS_REPO_ROOT/docs/$FILENAME"
-        if [ -f "$SRC_FILE" ]; then
-            ln -s "$SRC_FILE" "$DEST_FILE"
-            echo "✅ Linked $SRC_FILE → $DEST_FILE"
-        else
-            echo "⚠️ Skipping $FILENAME: file not found in .github repo"
-        fi
-        done
-        # also need to symlink the stuff in .github/assets to docs/assets
-        ASSETS_SRC="$REPO_PATH/assets"
-        ASSETS_DEST="$DOCS_REPO_ROOT/docs/assets"
-        if [ -d "$ASSETS_SRC" ]; then
-            for ITEM in "$ASSETS_SRC"/*; do
-                ITEM_NAME="$(basename "$ITEM")"
-                DEST_ITEM_LINK="$ASSETS_DEST/$ITEM_NAME"
-                ln -s "$ITEM" "$DEST_ITEM_LINK"
-                echo "✅ Linked $ITEM → $DEST_ITEM_LINK"
-            done
-        fi
+    echo "🔗 Hard-linking .github files to root docs..."
+    for SRC_FILE in "$REPO_PATH"/*.md; do
+        [ -e "$SRC_FILE" ] || continue
+        FILENAME=$(basename "$SRC_FILE")
+        DEST_FILE="$EXTERNAL_DIR/$FILENAME"
+        ln "$SRC_FILE" "$DEST_FILE" # Hard link
+        echo "✅ Linked $FILENAME"
+    done
+
+    # Assets linking
+    ASSETS_SRC="$REPO_PATH/assets"
+    ASSETS_DEST="$EXTERNAL_DIR/assets"
+    if [ -d "$ASSETS_SRC" ]; then
+        mkdir -p "$ASSETS_DEST"
+        cp -al "$ASSETS_SRC/." "$ASSETS_DEST/"
+        echo "✅ Hard-linked assets"
+    fi
   else
     echo "⚠️ Skipping $REPO_NAME: no docs directory found"
   fi
 done
 
-echo "Generating mkdocs.yml..."
-python "$DOCS_REPO_ROOT/scripts/generate_mkdocs.py"
+echo "Generating zensical.generated.toml ..."
+python "$DOCS_REPO_ROOT/scripts/generate_zensical.py"
 
-echo "Starting local MkDocs server..."
-mkdocs serve \
-    --config-file "$DOCS_REPO_ROOT/mkdocs.generated.yml" \
-    --watch "$DOCS_REPO_ROOT/overrides" \
-    --watch "$DOCS_REPO_ROOT/docs" \
-    $(for PATH in "${REPOS[@]}"; do [ -d "$PATH/docs" ] && echo "--watch $PATH/docs"; done) \
-    $(if [[ -a "$GH_REPO" ]]; then echo "--watch $GH_REPO"; fi)
+echo "Starting local Zensical server..."
+# ensure cleanup happens even if user hits Ctrl+C
+trap cleanup EXIT
 
-# Clean up symlinks after server stops
-echo "Cleaning up symlinks..."
-find $DOCS_REPO_ROOT -type l -delete
+zensical serve -f "$DOCS_REPO_ROOT/zensical.generated.toml"
 
 echo "✅ Done."

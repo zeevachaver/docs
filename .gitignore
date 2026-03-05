@@ -1,11 +1,11 @@
 .DS_Store
 
 # testing stuff
-mkdocs.generated.yml
+*.generated.*
 docs/arsandbox
 docs/vrui
 docs/kinect
-docs/3dvisualizer 
+docs/3dvisualizer
 docs/CODE_OF_CONDUCT.md
 docs/CONTRIBUTING.md
 docs/assets/GitHub_Header_Discussions.png

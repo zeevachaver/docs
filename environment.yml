@@ -2,9 +2,8 @@ name: vrui
 channels:
   - conda-forge
 dependencies:
-  - pyyaml
-  - mkdocs
-  - mkdocs-material
+  - tomlkit
+  - zensical
+  - pip
   - pip:
     - mkdocs-github-admonitions-plugin
-prefix: /opt/homebrew/Caskroom/miniforge/base/envs/vrui
