@@ -1,4 +1,4 @@
-# Vrui Overview
+# Welcome to Vrui
 
 Vrui is both a collection of software and a community of XR developers and scientific investigators and educators who use XR for research and teaching.
 
