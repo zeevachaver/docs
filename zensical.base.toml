@@ -30,6 +30,10 @@
         "pymdownx.inlinehilite" = {}
         "pymdownx.keys"         = {}
         "pymdownx.superfences"  = {}
+        "pymdownx.fancylists"   = {}
+        "pymdownx.saneheaders"  = {}
+        "pymdownx.tabbed"       = {} # todo update things with options to tabbed
+        "pymdownx.smartsymbols" = {}
         tables                  = {}
         toc                     = { title = "On this page", permalink = true }
 
