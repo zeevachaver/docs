@@ -4,7 +4,3 @@ channels:
 dependencies:
   - tomlkit
   - zensical
-  - pip
-  - pip:
-    - mkdocs-github-admonitions-plugin
-    - mkdocs-include-markdown-plugin
