@@ -156,7 +156,7 @@ git fetch upstream
 3. This command integrates the latest changes from the "upstream" repository, downloaded in the last command, into your own fork.
 
 ```sh
-git merge upstream/main
+git rebase upstream/main
 ```
 
 > [!TIP]
@@ -221,10 +221,10 @@ git fetch upstream
 Next, merge those updates into your local main branch:
 
 ```sh
-git merge upstream/main
+git rebase upstream/main
 ```
 
-If no conflicts occur, your repository is now up-to-date. If there are conflicts, resolve them before continuing. If not, push the updated changes to main:
+If no conflicts occur, your repository is now up-to-date. If there are conflicts, resolve them before continuing. Otherwise, push the updated changes to main:
 
 ```sh
 git push origin main
