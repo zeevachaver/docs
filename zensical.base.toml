@@ -24,19 +24,20 @@
     [project.markdown_extensions]
         abbr                    = {}
         admonition              = {}                                           # https://3os.org/utilities/markdown-cheatsheet/admonition/#supported-types
-        footnotes               = {}
-        "pymdownx.arithmatex"   = { generic = true }
-        "pymdownx.details"      = {}
-        "pymdownx.highlight"    = {}
-        "pymdownx.inlinehilite" = {}
-        "pymdownx.keys"         = {}
-        "pymdownx.superfences"  = {}
-        "pymdownx.fancylists"   = {}
-        "pymdownx.saneheaders"  = {}
-        "pymdownx.tabbed"       = {} # todo update things with options to tabbed
-        "pymdownx.smartsymbols" = {}
-        tables                  = {}
-        toc                     = { title = "On this page", permalink = true }
+        footnotes             = {}
+        pymdownx.arithmatex   = { generic = true }
+        pymdownx.details      = {}
+        pymdownx.highlight    = {}
+        pymdownx.inlinehilite = {}
+        pymdownx.keys         = {}
+        pymdownx.superfences  = {}
+        pymdownx.fancylists   = {}
+        pymdownx.saneheaders  = {}
+        pymdownx.tabbed       = {} # todo update things with options to tabbed
+        pymdownx.smartsymbols = {}
+        pymdownx.snippets     = { base_path = ["docs/shared/"], auto_append = ["abbreviations.md"]}
+        tables                = {}
+        toc                   = { title = "On this page", permalink = true }
 
     [project.theme]
         custom_dir = "overrides"
