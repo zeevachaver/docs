@@ -7,3 +7,4 @@ dependencies:
   - pip
   - pip:
     - mkdocs-github-admonitions-plugin
+    - mkdocs-include-markdown-plugin

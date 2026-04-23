@@ -17,6 +17,7 @@
 
     [project.plugins]
         "gh-admonitions" = {} # convert GitHub style alerts (> note) to standard mkdocs admonitions (!!! note)
+        "include-markdown" = {} # include text from another md file
         search           = {}
 
     # https://facelessuser.github.io/pymdown-extensions
