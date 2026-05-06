@@ -1,3 +1,4 @@
 vrui
 kinect
 arsandbox
+management_interface
