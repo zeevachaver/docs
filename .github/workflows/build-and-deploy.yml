@@ -1,28 +1,27 @@
 name: Build & Deploy Docs
 
 permissions:
-  contents: read       # 'read' is sufficient for checkout
-  pages: write         # Required to deploy to Pages
-  id-token: write      # Required to verify the deployment
+  contents: read
+  pages: write
+  id-token: write
 
 on:
   push:
     branches: [main]
+  pull_request:         # Added: Build will now check every PR
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  build-deploy:
+  # JOB 1: Build and Verify (Runs on PRs and Pushes)
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Checkout main repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Conda
-        uses: conda-incubator/setup-miniconda@v4
+        uses: conda-incubator/setup-miniconda@v3
         with:
             activate-environment: vrui
             environment-file: environment.yml
@@ -33,7 +32,7 @@ jobs:
         shell: bash -el {0}
         run: bash scripts/clone_docs.sh
 
-      - name: Generate mkdocs.yml
+      - name: Generate zensical config
         shell: bash -el {0}
         run: python scripts/generate_zensical.py
 
@@ -42,10 +41,19 @@ jobs:
         run: zensical build --config-file zensical.generated.toml --clean
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v3
         with:
           path: 'site'
 
+  # JOB 2: Deploy (Only runs on main after Build succeeds)
+  deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
