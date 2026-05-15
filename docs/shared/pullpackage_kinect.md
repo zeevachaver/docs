@@ -6,8 +6,8 @@ The Kinect package contains drivers for several types of 3D cameras that are use
 PullPackage Kinect
 ```
 
-<!-- Alternatively, the following command will install all packages required for Kinect in one go:
+<!-- Alternatively, the following command will install all packages required for Kinect in one go:-->
 
-```sh
-PullPackage Vrui && PullPackage Kinect
-``` -->
+<!-- ```sh -->
+<!-- PullPackage Vrui && PullPackage Kinect -->
+<!-- ```  -->

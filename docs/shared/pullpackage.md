@@ -17,7 +17,7 @@ In detail, the prerequisite installation steps are as follows:
 
 #### Install PullPackage
 
-To install the PullPackage package manager, copy the command from the following box into a terminal window and press the Enter key:
+To install the PullPackage package manager, copy the command from the following box into a terminal window and press ++enter++:
 
 ```sh
 curl https://vroom.library.ucdavis.edu/PullPackage | bash
