@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # This section automatically updates your GitHub Actions versions weekly
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
